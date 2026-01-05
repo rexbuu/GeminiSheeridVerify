@@ -1,0 +1,10 @@
+.env
+__pycache__/
+*.pyc
+stats.json
+users.json
+daily.json
+proxies.json
+*.png
+*.back
+.agent/

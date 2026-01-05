@@ -1,0 +1,6 @@
+httpx[socks]
+Pillow
+python-telegram-bot
+flask
+python-dotenv
+gunicorn
