@@ -5,6 +5,8 @@ stats.json
 users.json
 daily.json
 proxies.json
+codes.json
+broadcast.json
 *.png
 *.back
 .agent/

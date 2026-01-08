@@ -1,6 +1,13 @@
-httpx[socks]
-Pillow
-python-telegram-bot
-flask
-python-dotenv
-gunicorn
+# Core Bot
+python-telegram-bot>=20.0
+httpx[socks]>=0.25.0
+flask>=3.0.0
+python-dotenv>=1.0.0
+gunicorn>=21.0.0
+
+# Image Generation
+Pillow>=10.0.0
+
+# Anti-Detection (better TLS fingerprinting)
+curl_cffi>=0.6.0
+cloudscraper>=1.2.0

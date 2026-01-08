@@ -34,6 +34,26 @@ MIN_DELAY = 300
 MAX_DELAY = 800
 
 
+# ============ ANTI-DETECTION ============
+# Import from dedicated module for better maintenance
+try:
+    from anti_detect import get_headers, get_fingerprint, get_random_user_agent
+    HAS_ANTI_DETECT = True
+except ImportError:
+    HAS_ANTI_DETECT = False
+    # Fallback if module not available
+    def get_headers(for_sheerid=True, with_auth=None):
+        return {
+            "content-type": "application/json",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/131.0.0.0",
+            "origin": "https://services.sheerid.com",
+            "referer": "https://services.sheerid.com/",
+        }
+    def get_fingerprint():
+        return hashlib.md5(str(time.time()).encode()).hexdigest()
+
+
+
 # ============ STATS TRACKING ============
 class Stats:
     """Track success rates by organization and error types"""
@@ -444,8 +464,9 @@ class GeminiVerifier:
     def _request(self, method: str, endpoint: str, body: Dict = None) -> Tuple[Dict, int]:
         random_delay()
         try:
+            headers = get_headers(for_sheerid=True)
             resp = self.client.request(method, f"{SHEERID_API_URL}{endpoint}", 
-                                       json=body, headers={"Content-Type": "application/json"})
+                                       json=body, headers=headers)
             return resp.json() if resp.text else {}, resp.status_code
         except Exception as e:
             raise Exception(f"Request failed: {e}")
